@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="458.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frame.FrameController">
+  <children>
+    <TextField fx:id="IDTextField" layoutX="14.0" layoutY="29.0" prefWidth="164.0" />
+    <Label fx:id="IDLabel" layoutX="23.0" layoutY="6.0" text="Введите ID" />
+    <Button fx:id="IDButton" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" onAction="#onClick" text="Вывести информацию" />
+    <TableView fx:id="OutputTable" editable="false" layoutX="14.0" layoutY="108.0" prefHeight="64.0" prefWidth="528.0">
+      <columns>
+        <TableColumn fx:id="Id" prefWidth="75.0" text="ID" />
+        <TableColumn fx:id="Fname" prefWidth="75.0" text="Fname" />
+        <TableColumn fx:id="AcademicDegree" prefWidth="75.0" text="AcademicDegree" />
+        <TableColumn fx:id="PlaceOfWork" prefWidth="75.0" text="PlaceOfWork" />
+        <TableColumn fx:id="Position" prefWidth="75.0" text="Position" />
+        <TableColumn fx:id="CitizenShip" prefWidth="75.0" text="Citizenship" />
+        <TableColumn fx:id="Bdate" prefWidth="75.0" text="Bdate" />
+      </columns>
+    </TableView>
+    <Label fx:id="ErrorLabel" layoutX="14.0" layoutY="192.0" text="" />
+    <Button fx:id="addButton" layoutX="198.0" layoutY="61.0" mnemonicParsing="false" onAction="#onAddClick" text="Добавить пользователя" />
+    <Button fx:id="deleteButton" layoutX="379.0" layoutY="61.0" mnemonicParsing="false" onAction="#onDeleteClick" text="Удалить пользователя" />
+      <TableView fx:id="papersTable" layoutX="15.0" layoutY="245.0" prefHeight="200.0" prefWidth="428.0">
+        <columns>
+          <TableColumn fx:id="Id1" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="Title" prefWidth="75.0" text="TITLE" />
+            <TableColumn fx:id="Type" prefWidth="96.0" text="TYPE" />
+            <TableColumn fx:id="Sectionname" prefWidth="93.0" text="SECTIONNAME" />
+            <TableColumn fx:id="Sdate" prefWidth="86.0" text="SDATE" />
+        </columns>
+      </TableView>
+      <Button fx:id="IDButton1" layoutX="11.0" layoutY="216.0" mnemonicParsing="false" onAction="#onClick1" text="Вывести информацию" />
+      <Button fx:id="addButton1" layoutX="198.0" layoutY="216.0" mnemonicParsing="false" onAction="#onAddClick1" text="Добавить пользователя" />
+      <Button fx:id="deleteButton1" layoutX="397.0" layoutY="216.0" mnemonicParsing="false" onAction="#onDeleteClick1" prefHeight="26.0" prefWidth="183.0" text="Удалить пользователя" />
+      <Button fx:id="showButton" layoutX="454.0" layoutY="255.0" mnemonicParsing="false" onAction="#onShowClick" text="Вывести всех" />
+      <Button fx:id="show" layoutX="380.0" layoutY="28.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="Вывести всех" onAction="#onshow" />
+  </children>
+</AnchorPane>
