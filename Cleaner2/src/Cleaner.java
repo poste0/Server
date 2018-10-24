@@ -134,7 +134,10 @@ public class Cleaner {
     public void suckUp(){
         points += 100;
     }
-    public void turnOff(){}
+    public void turnOff(){
+
+        new Scanner(System.in);
+    }
 
     private int lastFace = DOWN;
     public void work() throws InterruptedException {
@@ -172,35 +175,42 @@ public class Cleaner {
         }
     }
 
-    private void goHome1()
-    {
+    private void goHome1() throws InterruptedException {
         int[][] markedNode = new int[ySize][xSize]; // массив, где будут хранится "отметки" каждого узла
         int markNumber = 1;                        // счетчик
-        markedNode[y][x] = markNumber;         // инициализация стартового узла
+        markedNode[y][x] = markNumber;// инициализация стартового узла
         while (markedNode[1][1] == 0)
         {          // пока не достигли финишного узла
-            for (int i = 0; i < ySize; i++)
+            for (int i = 1; i < ySize; i++)
             {
-                for(int j = 0 ; j < xSize ; j++)
+                for(int j = 1 ; j < xSize ; j++)
                 {
                     if (markedNode[i][j] == markNumber)
                     {                                          // начинаем со стартового узла
                                // просматриваем все соседние узлы
                             if (markedNode[i-1][j] == 0 && knownMap[i-1][j] != Types.OBSTACLE && knownMap[i-1][j] != Types.NONE )
                             {
-                                markedNode[i-1][j] = markNumber;
+                                markedNode[i-1][j] = markNumber + 1;
                             }
-                        if (markedNode[i+1][j] == 0 && knownMap[i-1][j] != Types.OBSTACLE && knownMap[i-1][j] != Types.NONE && i != ySize - 1 )
+                            if(i != ySize - 1 ) {
+                                if (markedNode[i + 1][j] == 0 && knownMap[i + 1][j] != Types.OBSTACLE && knownMap[i + 1][j] != Types.NONE) {
+                                    markedNode[i + 1][j] = markNumber + 1;
+                                }
+                            }
+                        if (markedNode[i][j-1] == 0 && knownMap[i][j-1] != Types.OBSTACLE && knownMap[i][j-1] != Types.NONE )
                         {
-                            markedNode[i+1][j] = markNumber;
+                            markedNode[i][j-1] = markNumber + 1;
                         }
-                        if (markedNode[i][j-1] == 0 && knownMap[i-1][j] != Types.OBSTACLE && knownMap[i-1][j] != Types.NONE )
-                        {
-                            markedNode[i][j-1] = markNumber;
+                        try {
+                            if(j != xSize - 1) {
+                                if (markedNode[i][j + 1] == 0 && knownMap[i][j + 1] != Types.OBSTACLE && knownMap[i][j + 1] != Types.NONE) {
+                                    markedNode[i][j + 1] = markNumber + 1;
+                                }
+                            }
                         }
-                        if (markedNode[i][j+1] == 0 && knownMap[i-1][j] != Types.OBSTACLE && knownMap[i-1][j] != Types.NONE )
-                        {
-                            markedNode[i][j+1] = markNumber;
+                        catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println(i);
+                            System.out.println(j);
                         }
 
                         }
@@ -208,7 +218,69 @@ public class Cleaner {
                 }
             markNumber++;
             }
-        System.out.println(" ");
+        System.out.println("asdasdasd ");
+        int x = 1;
+        int y = 1;
+        int d = markedNode[1][1];
+        int[] px = new int[ySize * xSize];
+        int[] py = new int[ySize * xSize];
+        int dx[] = {1, 0, -1, 0};   // смещения, соответствующие соседям ячейки
+        int dy[] = {0, 1, 0, -1};
+        while ( d > 0 )
+        {
+            px[d] = x;
+            py[d] = y;                   // записываем ячейку (x, y) в путь
+            d--;
+            for (int k = 0; k < 4; ++k)
+            {
+                int iy=y + dy[k], ix = x + dx[k];
+                if ( iy >= 0 && iy < ySize && ix >= 0 && ix < xSize && markedNode[iy][ix] == d)
+                {
+                    x = x + dx[k];
+                    y = y + dy[k];           // переходим в ячейку, которая на 1 ближе к старту
+                    break;
+                }
+            }
+        }
+        px[0] = this.x;
+        py[0] = this.y;
+        for(int i = 0 ; i < ySize ; i++){
+            for(int j = 0 ; j < xSize ; j++){
+                System.out.print(markedNode[i][j] + " ");
+            }
+            System.out.println();
+        }
+        for(int i = 0 ; i < xSize * ySize ; i++){
+            System.out.print(px[i] + " ");
+        }
+        for(int i = 0 ; i < xSize * ySize ; i++){
+            System.out.print(py[i] + " ");
+        }
+        int k = 2;
+        while (true){
+            if(px[k] < this.x){
+                turn(LEFT);
+            }
+            else if(px[k] > this.x){
+                turn(RIGHT);
+            }
+            else if(py[k] < this.y){
+                turn(UP);
+            }
+            else if(py[k] > this.y){
+                turn(DOWN);
+            }
+            Thread.sleep(500);
+            goForward();
+            paint();
+            k++;
+            if(this.x == 1 && this.y == 1){
+                turnOff();
+                System.out.println("sdasd");
+
+                break;
+            }
+        }
         }
 
     private void goHome() throws InterruptedException
@@ -327,7 +399,7 @@ public class Cleaner {
     void paint() throws InterruptedException
     {
         Thread.sleep(500);
-        frame.repaint(x , y , face);
+        frame.repaint(x , y , face , points);
     }
     boolean check(){
         if(knownMap[y][x] == Types.BORDER){
@@ -350,7 +422,7 @@ public class Cleaner {
         }
         return false;
     }
-    void check(int face){
+    void check(int face) throws InterruptedException {
         if(sensors[0] == 1){
             goBack();
             turn(face);
@@ -466,13 +538,15 @@ public class Cleaner {
         }
 
     }
-    void turn(int newFace){
+    void turn(int newFace) throws InterruptedException {
         switch (newFace) {
             case RIGHT:
                 switch (face) {
                 case UP:
                     //lastFace = UP;
                     turnRight();
+                    Thread.sleep(500);
+                    paint();
                     break;
                 case RIGHT:
                     //lastFace = RIGHT;
@@ -480,11 +554,17 @@ public class Cleaner {
                 case DOWN:
                     //lastFace = DOWN;
                     turnLeft();
+                    Thread.sleep(500);
+                    paint();
                     break;
                 case LEFT:
                     //lastFace = LEFT;
                     turnRight();
+                    Thread.sleep(500);
+                    paint();
                     turnRight();
+                    Thread.sleep(500);
+                    paint();
                     break;
             }
             break;
@@ -493,11 +573,17 @@ public class Cleaner {
                     case UP:
                         //lastFace = UP;
                         turnRight();
+                        paint();
+                        Thread.sleep(500);
                         turnRight();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case RIGHT:
                         //lastFace = RIGHT;
                         turnRight();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case DOWN:
                         //lastFace = DOWN;
@@ -505,6 +591,8 @@ public class Cleaner {
                     case LEFT:
                         //lastFace = LEFT;
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         break;
                 }
                 break;
@@ -513,15 +601,23 @@ public class Cleaner {
                     case UP:
                         //lastFace = UP;
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case RIGHT:
                         //lastFace = RIGHT;
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case DOWN:
                         //lastFace = DOWN;
                         turnRight();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case LEFT:
                         //lastFace = LEFT;
@@ -536,15 +632,23 @@ public class Cleaner {
                     case RIGHT:
                       //  lastFace = RIGHT;
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case DOWN:
                       //  lastFace = DOWN;
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         turnLeft();
+                        paint();
+                        Thread.sleep(500);
                         break;
                     case LEFT:
                         //lastFace = LEFT;
                         turnRight();
+                        paint();
+                        Thread.sleep(500);
                         break;
                 }
                 break;

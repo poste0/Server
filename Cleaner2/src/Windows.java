@@ -21,6 +21,7 @@ public class Windows extends JFrame {
                 mainPanel.add(button);
             }
         }
+
         //mainPanel.setLayout(new GridLayout(map.getN() , map.getM()));
         setVisible(true);
         //pack();
@@ -61,12 +62,16 @@ public class Windows extends JFrame {
     }
 
 
-    public void repaint(int x , int y , int face) {
+    public void repaint(int x , int y , int face , int point) {
         Button button;
         for(int i = 0 ; i < this.ySize ; i++) {
             for (int j = 0; j < this.xSize ; j++) {
                 button = (Button) mainPanel.getComponents()[i * this.ySize + j];
-                button.setLabel(asString(i  , j , x , y , face ));
+                if ((i == 1 && j == 1)) {
+                    button.setLabel(String.valueOf(point));
+                } else {
+                    button.setLabel(asString(i, j, x, y, face));
+                }
             }
         }
     }
