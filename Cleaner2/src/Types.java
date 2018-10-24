@@ -1,0 +1,3 @@
+public enum Types {
+    CLEAN , OBSTACLE , CLEANED , HOME , DIRTY , PASSED , NONE , GOING_HOME , BORDER;
+}
