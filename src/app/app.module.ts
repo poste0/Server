@@ -47,13 +47,16 @@ import {CdkTableModule} from '@angular/cdk/table';
 import 'hammerjs';
 
 import { HttpClientModule }   from '@angular/common/http';
-import {SessionsComponent} from './sessions/sessions.component';
+import {AdminComponent} from './admin/admin.component';
+import {DialogOverviewDialog} from './admin/admin.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-   
-    SessionsComponent,
+
+    AdminComponent,
+     DialogOverviewDialog
   ],
   imports: [
     MatSelectModule,
@@ -79,7 +82,7 @@ import {SessionsComponent} from './sessions/sessions.component';
     MatSnackBarModule,
     MatAutocompleteModule,
   ],
-  entryComponents: [SessionsComponent],
+  entryComponents: [AdminComponent , DialogOverviewDialog],
   providers: [],
   bootstrap: [AppComponent ],
 })

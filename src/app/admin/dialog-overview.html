@@ -1,0 +1,41 @@
+<mat-form-field>
+      <mat-select #type placeholder="Type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.value }}
+        </mat-option>
+      </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+      <mat-select #mle placeholder="More , Less , Equal">
+        <mat-option *ngFor="let mle of mles" [value]="mle.value">
+          {{ mle.value }}
+        </mat-option>
+</mat-select>
+  </mat-form-field>
+
+<mat-form-field>
+    <input matInput #value placeholder="Value">
+      </mat-form-field>
+
+        <mat-form-field>
+        <mat-select #typeOfEvent  placeholder="Type of event">
+          <mat-option *ngFor="let typeOfEvent of typeOfEvents" [value]="typeOfEvent.value">
+            {{ typeOfEvent.msg }}
+          </mat-option>
+        </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field>
+              <input matInput #cost placeholder="cost">
+                </mat-form-field>
+
+                <mat-form-field>
+
+         <input matInput #date [matDatepicker]="picker1" placeholder="Date" required>
+         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+         <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+       </mat-form-field>
+    <button mat-icon-button (click)="createEvent(type.value , mle.value , value.value , cost.value ,  typeOfEvent.value , date.value)">
+         <mat-icon class="example-icon">add</mat-icon>
+      </button>
