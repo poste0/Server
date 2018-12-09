@@ -1,0 +1,18 @@
+server:
+ port: 8081
+ smtp:
+  email: email
+  password: password
+
+spring.datasource.url: jdbc:postgresql://ec2-79-125-124-30.eu-west-1.compute.amazonaws.com:5432/d3f7igvabd7829?ssl=true&sslmode=require
+spring.datasource.username: ytoobfxplutpbl
+spring.datasource.password: b45c51fb0acc066a3d9d8f57ea172fe64330af039f707a7500b17a5d3a3169e4
+
+logging:
+  level:
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
+
+
+
+
+

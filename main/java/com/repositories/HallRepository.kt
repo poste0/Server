@@ -1,0 +1,10 @@
+package com.repositories
+
+import com.entities.Hall
+import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
+
+@Repository
+@Transactional
+interface HallRepository : CrudRepository<Hall, Long>
