@@ -1,0 +1,89 @@
+<button mat-icon-button (click)="switchFilms()">
+ Films
+</button>
+<button mat-icon-button (click)="switchSession()">
+ Sessions
+</button>
+<button mat-icon-button (click)="switchEvents()">
+ Events
+</button>
+<div *ngIf = "isSession && !isEvents" class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="film">
+      <mat-header-cell *matHeaderCellDef> Film </mat-header-cell>
+      <mat-cell *matCellDef="let session"> {{session.film}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+      <mat-cell *matCellDef="let session"> {{session.time}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let session"> {{session.price}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Capacity">
+      <mat-header-cell *matHeaderCellDef> Capacity </mat-header-cell>
+      <mat-cell *matCellDef="let session"> {{session.capacity}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="book">
+      <mat-header-cell *matHeaderCellDef>
+        Book
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn" (click)="createBook(row)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumnsForSessions"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumnsForSessions;"></mat-row>
+  </mat-table>
+</div>
+<div *ngIf = "!isSession" class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let film"> {{film.title}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let film"> {{film.description}} </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumnsForFilms"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumnsForFilms;"></mat-row>
+  </mat-table>
+</div>
+
+<div *ngIf = "isEvents" class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Condition </mat-header-cell>
+      <mat-cell *matCellDef="let event"> {{event.condition}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+      <mat-cell *matCellDef="let event"> {{event.endDate}} </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumnsForFilms"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumnsForFilms;"></mat-row>
+  </mat-table>
+</div>
