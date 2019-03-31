@@ -10,6 +10,7 @@ public class User {
     private UUID id;
 
     private String action;
+    private int k;
 
     public User(String name){
         this.name = name;
@@ -21,6 +22,9 @@ public class User {
         this.name = name;
         this.id = UUID.fromString(id);
         this.action = action;
+    }
+    public int getK(){
+        return k;
     }
 
 

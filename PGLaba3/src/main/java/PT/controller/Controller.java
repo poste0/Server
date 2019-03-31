@@ -34,11 +34,29 @@ public class Controller {
     @RequestMapping(value = "/go" , method = RequestMethod.POST)
     public ResponseEntity go(@RequestBody User user){
         session.setAction(user);
-        while(session.getPlayer() < 2){
-            if(session.getPlayer() == 2){
+        int k = user.getK();
+        while(session.getPlayer() < 2 + 2*k){
+            if(session.getPlayer() == 2 + 2*k){
                 break;
             }
         }
+
+        User user1 = session.go();
+        if(user1 == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A");
+        }
+        if(user1.getId() == session.getUser1().getId()){
+            return ResponseEntity.status(HttpStatus.OK).body(user1);
+
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(user1);
+
+        }
+
+    }
+    @RequestMapping(value = "/g" , method = RequestMethod.POST)
+    public ResponseEntity g(@RequestBody User user){
 
         User user1 = session.go();
         if(user1 == null){

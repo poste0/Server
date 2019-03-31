@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit;
 public class Main {
    static OkHttpClient client = new OkHttpClient();
    static  User user;
-
+   static int your = 0;
+   static int enemy = 0;
     public static void main(String[] args) throws IOException {
 
         client.setConnectTimeout(10 , TimeUnit.MINUTES);
@@ -35,10 +36,18 @@ public class Main {
                 System.out.println("Wrong");
             }
         }
-        System.out.println("Choose an action");
-        String action = scanner.next();
-        System.out.println("Wait for your enemy's turn");
-        play(action);
+        for(int i = 0 ; i < 5 ; i++) {
+            System.out.println("Score - " + your + " " + enemy);
+            System.out.println("Choose an action");
+            String action = scanner.next();
+            while(action != "cut".toUpperCase() || action != "stone".toUpperCase() || action != "paper".toUpperCase()){
+                System.out.println("wrong");
+                action = scanner.next();
+            }
+                System.out.println("Wait for your enemy's turn");
+            play(action , i);
+        }
+        System.out.println("Score - " + your + " " + enemy);
 
 
     }
@@ -62,12 +71,13 @@ public class Main {
 
     }
 
-    public static void play(String action) throws IOException {
+    public static void play(String action , int k) throws IOException {
         HttpUrl urls = HttpUrl.parse("http://localhost:8080/go");
         JSONObject object = new JSONObject();
         object.put("name" , user.getName());
         object.put("id" , user.getId().toString());
         object.put("action" , action);
+        object.put("k" , k);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8") , object.toString());
         Request request = new Request.Builder().url(urls).post(body).build();
         Response response = client.newCall(request).execute();
@@ -80,9 +90,11 @@ public class Main {
 
         if(object.get("id").equals(user.getId().toString())){
             System.out.println("You have won");
+            your++;
         }
         else{
             System.out.println("You have lost");
+            enemy++;
         }
     }
 }
